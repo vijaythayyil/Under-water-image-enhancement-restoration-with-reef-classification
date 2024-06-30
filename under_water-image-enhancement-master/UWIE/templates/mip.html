@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+{% csrf_token %}
+{% load static %}
+<html>
+
+<head>
+	<title>MIP</title>
+
+</head>
+<style type="text/css">
+	body {
+
+		background-repeat: no-repeat;
+		background-size: 100%;
+		margin: 0;
+		padding: 0;
+	}
+
+	#image_block {
+		display: flex;
+		width: 100%;
+		height: 100%;
+		justify-content: space-between;
+		align-items: center;
+		z-index: 10;
+		position: fixed;
+	}
+
+	#img1 {
+		width: 30%;
+		height: 450px;
+		margin-left: 35px;
+		margin-top: 35px;
+		border-radius: 15px;
+		border: 2px solid #fc2003;
+	}
+
+	.button {
+		background-color: #4CAF50;
+		border: none;
+		color: white;
+		text-align: center;
+		text-decoration: none;
+		font-size: 16px;
+		margin: 4px 2px;
+		transition-duration: 0.4s;
+		cursor: pointer;
+		font-weight: bold;
+		outline: none;
+		border-radius: 15px;
+		min-width: 150px;
+		min-height: 50px;
+		font-family: 'Raleway', sans-serif;
+		color: white;
+	}
+
+	.butt1 {
+		border: 2px solid #fff;
+	}
+
+	.butt1:hover {
+		background-color: #e00744;
+		color: white;
+	}
+
+	#img2 {
+		width: 30%;
+		height: 450px;
+		margin-right: 35px;
+		margin-top: 35px;
+		border-radius: 15px;
+		border: 2px solid #aab302;
+	}
+
+	#form1 {
+		color: #ff6789;
+		padding: 0;
+		padding-bottom: 0px;
+		padding-top: 10px;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	#file1 {
+		display: none;
+	}
+
+	.select {
+		background-color: #4CAF50;
+		border: none;
+		text-align: center;
+		text-decoration: none;
+		transition-duration: 0.4s;
+		cursor: pointer;
+		font-weight: bold;
+		outline: none;
+		border: 2px solid #fff;
+	}
+
+	.select:hover {
+		background-color: #fc2003;
+		color: white;
+	}
+
+	#img1 {
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+	}
+
+	#img2 {
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+	}
+	video{
+		top: 0;
+		right: 0;
+		left: 0;
+		position: fixed;
+		min-width: 100%;
+		min-height: 100%;
+	}
+</style>
+
+<body onload="load()">
+
+	<video autoplay muted loop id="video">
+		<source src="./static/Video/2.mp4" type="video/mp4">
+	</video>
+
+	<div id="image_block">
+
+
+		<div id="img1">
+
+		</div>
+
+		<form id="form1" method="post" action="{% url "getimagemip" %}" enctype="multipart/form-data">
+			{% csrf_token %}
+			<input type="file" id="file1" name="image" onchange="preview_image(event)">
+			<input class="button select" type="button" id="file2" value="Select Image">
+			<div id="buttons">
+				<button name="" type="submit" class="button butt1">Enhance</button>
+			</div>
+		</form>
+
+		<div id="img2" onload="load()">
+
+		</div>
+
+	</div>
+</body>
+
+</html>
+
+<script type="text/javascript">
+	document.getElementById('file2').onclick = function () {
+		document.getElementById('file1').click();
+	};
+
+	function preview_image(event) {
+		var reader = new FileReader();
+		reader.onload = function () {
+			var output = document.getElementById('img1');
+			output.style.backgroundImage = "url('" + reader.result + "')";
+		}
+		reader.readAsDataURL(event.target.files[0]);
+	}
+
+	function load() {
+		var output1 = document.getElementById('img1');
+		output1.style.backgroundImage = "url('static/Input/{{ img1 }}')";
+		var output2 = document.getElementById('img2');
+		output2.style.backgroundImage = "url('static/Input/{{ img2 }}')";
+	}
+</script>

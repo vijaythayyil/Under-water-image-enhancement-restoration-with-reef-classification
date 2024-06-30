@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<title>UWIER</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap" rel="stylesheet">
+</head>
+<style media="screen">
+	* {
+		margin: 0;
+		padding: 0;
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	}
+
+	body {
+		width: 100%;
+		height: 100vh;
+		background-image: url('static/grd_path.svg');
+		background-size: cover;
+		background-position-x: left;
+
+	}
+
+	#head1 {
+		background-color: #020c21;
+		width: 100%;
+		display: inline-block;
+		margin: 0;
+		padding-top: 10px;
+	}
+
+	#head1 h1 {
+		text-align: center;
+		font-size: 46px;
+		color: #54ebeb;
+		font-family: monospace;
+		margin: 0;
+		padding: 0;
+		position: initial;
+	}
+
+	#f1 {
+		margin-right: 0;
+		float: right;
+		padding: 0;
+		right: 0;
+		margin-top: -20px;
+		color: #05e3ba;
+	}
+
+	#f1 h3 {
+		font-family: sans-serif;
+		font-size: 14px;
+	}
+
+	video{
+		top: 0;
+		right: 0;
+		left: 0;
+		min-width: 100%;
+		min-height: 100%;
+	}
+
+	#links {
+		height: 100%;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		z-index: 9;
+		position: fixed;
+	}
+
+	.enhance,
+	.restore {
+		width: 30%;
+		height: 35%;
+		display: block;
+		text-align: center;
+		border: 1px solid #ffffff;
+		border-radius: 25px;
+	}
+
+	.enhance h2,
+	.restore h2 {
+		padding: 10px 0px 10px 0px;
+		text-align: center;
+		font-family: 'Raleway', sans-serif;
+		color: white;
+	}
+
+	.buttons {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+	}
+
+	.button {
+		width: 35%;
+		background-image: linear-gradient(to bottom right, #07a157, #40cc27);
+		border: none;
+		color: white;
+		padding: 16px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		transition-duration: 0.4s;
+		cursor: pointer;
+		font-weight: bold;
+		outline: none;
+		border-radius: 35px;
+		border: 2px solid rgb(255, 255, 255);
+	}
+
+	.butt1:hover {
+		background-color: teal;
+		color: white;
+	}
+
+
+	.butt2:hover {
+		background-color: #f44336;
+		color: white;
+	}
+
+	.butt3:hover {
+		background-color: #f44695;
+		color: white;
+	}
+
+	.water {
+		width: 400px;
+		height: 400px;
+		background-color: #0D31C1;
+		border-radius: 50%;
+		position: relative;
+		box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5), 0 4px 10px 0 rgba(0, 0, 0, .5);
+		overflow: hidden;
+	}
+
+	.water:before,
+	.water:after {
+		content: '';
+		position: absolute;
+		width: 400px;
+		height: 400px;
+		top: -150px;
+		background-color: #fff;
+	}
+
+	.water:before {
+		border-radius: 45%;
+		background: rgba(255, 255, 255, 1);
+		animation: wave 5s linear infinite;
+	}
+
+	.water:after {
+		border-radius: 35%;
+		background: rgba(255, 255, 255, .3);
+		animation: wave 5s linear infinite;
+	}
+
+	@keyframes wave {
+		0% {
+			transform: rotate(0);
+		}
+
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	.load {
+		position: fixed;
+		width: 100%;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: fixed;
+		background-color: #fff;
+		z-index: 10;
+	}
+
+	.preloader {
+		height: fit-content;
+		margin-top: 50px;
+		background-color: rgb(255, 255, 255);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.loader p {
+		text-align: center;
+		margin-top: 5px;
+		font-family: 'Poppins', sans-serif;
+		font-size: 26px;
+		font-weight: 550;
+		letter-spacing: 4px;
+		padding: 0;
+	}
+
+	#end {
+		font-size: 16px;
+		font-weight: 500;
+		letter-spacing: 2px;
+		margin-top: -20px;
+	}
+</style>
+
+<body>
+	<div class="load" id="preloader">
+		<div class="loader">
+			<div class="preloader">
+				<div class="water"></div>
+			</div>
+			<p>UNDERWATER IMAGE</p>
+			<br />
+			<p id="end">ENHANCEMENT AND RESTORATION</p>
+		</div>
+	</div>
+
+	<video autoplay muted loop id="video" style="visibility: hidden;">
+		<source src="./static/Video/1.mp4" type="video/mp4">
+	</video>
+
+	<div id="links">
+		<div class="enhance">
+			<h2>IMAGE ENHANCEMENT</h2>
+			<div class="buttons">
+				<button class="button butt1" onclick="location.href = 'clahe' "> CLAHE </button>
+				<button class="button butt2" onclick="location.href = 'rayleigh' "> RAYLEIGH </button>
+			</div>
+		</div>
+
+		<div class="restore">
+			<h2>IMAGE RESTORATION</h2>
+			<div class="buttons">
+				<button class="button butt3" onclick="location.href = 'dcp' "> DCP </button>
+				<button class="button butt3" onclick="location.href = 'mip' "> MIP </button>
+			</div>
+
+		</div>
+<!-- 
+		<div class="restore">
+			<h2>REEF CLASSIFICATION</h2>
+			<div class="buttons">
+				<button class="button butt3" onclick="location.href = 'mip' "> CLASSIFY </button>
+			</div>
+		</div> -->
+	</div>
+
+</body>
+<script>
+	function playV(){
+			document.getElementById('video').style.visibility = "visible"
+			document.getElementById('video').style.position = 'fixed'
+			document.querySelector('video').play()
+	}
+
+	jQuery(document).ready(function ($) {
+		$(window).on('load', function () {
+			setTimeout(function () {
+				$('#preloader').fadeOut('slow', function () {});
+			}, 2000);
+			
+		});
+	});
+	console.log("her i am ")
+	setTimeout(playV(),50000);
+</script>
+
+</html>
